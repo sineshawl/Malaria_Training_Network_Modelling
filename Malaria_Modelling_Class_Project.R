@@ -3,11 +3,22 @@
 
 ####Project Description####
 
-##This project introduces the intersection of network analysis and epidemic modeling through a hands-on exploration of disease transmission dynamics. Using a dataset of participants from various countries attending a Malaria Modelling modular program in Nairobi, Kenya, participants learn to construct social networks based on participants interaction patterns and simulate disease spread using a Susceptible-Infected-Susceptible (SIS) model.
+##This project introduces the intersection of network analysis and epidemic modeling through 
+## a hands-on exploration of disease transmission dynamics. Using a dataset of participants 
+## from various countries attending a Malaria Modelling modular program in Nairobi, Kenya, 
+## participants learn to construct social networks based on participants interaction patterns 
+## and simulate disease spread using a Susceptible-Infected-Susceptible (SIS) model.
 
-##The project aims to demonstrate how network structure influences epidemic outcomes by modeling connections between individuals from the same countries, with Kenya serving as a hub connecting participants from different nations. The aim is to explore key epidemiological concepts including transmission rates (β), recovery rates (γ), and intervention strategies like wearing masks and identification of superspreaders.
+##The project aims to demonstrate how network structure influences epidemic outcomes by modeling 
+## connections between individuals from the same countries, with Kenya serving as a hub connecting 
+## participants from different nations. The aim is to explore key epidemiological concepts including 
+## transmission rates (β), recovery rates (γ), and intervention strategies like wearing masks and 
+##identification of superspreaders.
 
-##Through this practical exercise, participants should gain a hands-on experience with network visualization, epidemic simulation, and quantitative analysis of public health interventions. The goals is to emphasize applications by examining scenarios such as the impact of protective measures introduced mid-outbreak and the role of highly connected individuals in accelerating disease spread.
+##Through this practical exercise, participants should gain a hands-on experience with network visualization, 
+## epidemic simulation, and quantitative analysis of public health interventions. The goals is to emphasize 
+## applications by examining scenarios such as the impact of protective measures introduced mid-outbreak 
+## and the role of highly connected individuals in accelerating disease spread.
 
 ##Exercises are presented at the end of this tutorial
 
@@ -20,7 +31,19 @@ library(dplyr) # For manipulation
 library(RColorBrewer) # For colours
 
 ##Create the dataset - participants, and their country of origin.
-data <- data.frame( Participant = c("KAM", "SIN", "RAH", "DAW", "LUC", "TUH", "BAS", "MBA", "MUS", "DAV", "CHA", "EMM", "LYD", "VAL", "GOD", "AGN", "ROS", "FRA", "JAM", "DGB", "ELI", "WAN", "MUT", "GEO", "GEF", "SAH", "PAT", "TAB", "BRI", "STA", "OUM", "STE", "THU", "EMI", "CAM", "ZEN", "BIL", "JOH", "ALI", "PUR", "WAI", "MIL", "BRL", "TRI"),  Country = c("Cameroon", "Ethiopia", "Tanzania", "Ethiopia", "Zambia", "Uganda", "Nigeria", "Cameroon", "Zimbabwe", "Zambia", "Kenya", "Kenya", "Kenya", "Kenya", "Malawi", "Malawi", "Tanzania", "Tanzania", "Kenya", "Ethiopia", "Tanzania", "Kenya", "Kenya", "Kenya", "Kenya", "Tunisia", "Kenya", "Kenya", "Kenya", "Kenya", "Tunisia", "Kenya", "Kenya", "Switzerland", "Switzerland", "Ghana", "Switzerland", "Kenya", "Kenya", "Kenya", "Kenya", "Kenya", "Kenya", "Kenya"))
+data <- data.frame( Participant = c("KAM", "SIN", "RAH", "DAW", "LUC", "TUH", "BAS", "MBA", 
+                                    "MUS", "DAV", "CHA", "EMM", "LYD", "VAL", "GOD", "AGN", 
+                                    "ROS", "FRA", "JAM", "DGB", "ELI", "WAN", "MUT", "GEO", 
+                                    "GEF", "SAH", "PAT", "TAB", "BRI", "STA", "OUM", "STE", 
+                                    "THU", "EMI", "CAM", "ZEN", "BIL", "JOH", "ALI", "PUR", 
+                                    "WAI", "MIL", "BRL", "TRI"),  
+                    Country = c("Cameroon", "Ethiopia", "Tanzania", "Ethiopia", "Zambia", 
+                                "Uganda", "Nigeria", "Cameroon", "Zimbabwe", "Zambia", "Kenya", 
+                                "Kenya", "Kenya", "Kenya", "Malawi", "Malawi", "Tanzania", "Tanzania", 
+                                "Kenya", "Ethiopia", "Tanzania", "Kenya", "Kenya", "Kenya", "Kenya", 
+                                "Tunisia", "Kenya", "Kenya", "Kenya", "Kenya", "Tunisia", "Kenya", 
+                                "Kenya", "Switzerland", "Switzerland", "Ghana", "Switzerland", "Kenya", 
+                                "Kenya", "Kenya", "Kenya", "Kenya", "Kenya", "Kenya"))
 
 #####PART 1. NETWORK CONSTRUCION ####
 
@@ -181,7 +204,7 @@ sis_model <- function(adj_matrix, beta, gamma, initial_infected, days, superspre
 ###3 - SIMULATIONS
 
 # Set parameters
-beta <- 0.101
+beta <- 0.4
 gamma <- 0.1
 days <- 30
 
@@ -384,6 +407,42 @@ plot_network_degree <- function(g, data) {
 plot_network_degree(g, data)
 
 ###Exercise 1.1- What is betweenness centrality. Redraw the network with node sizes proportional to the node betweenness. How does this differ from degree centrality?
+###________________###
+###      Answer    ###
+###________________###
+
+plot_network_betweenness <- function(g, data) {
+  ##Calculate degree centrality
+  betweenness <- betweenness(g)
+  
+  ##Color nodes by country
+  countries <- unique(data$Country)
+  colors <- RColorBrewer::brewer.pal(min(length(countries), 11), "Spectral")
+  country_colors <- setNames(colors[1:length(countries)], countries)
+  V(g)$color <- country_colors[V(g)$country]
+  
+  ##Layout
+  set.seed(123)
+  layout <- layout_with_fr(g)
+  
+  ##Plot with node sizes proportional to degree
+  plot(g, 
+       layout = layout,
+       vertex.size = betweenness * 2,  # Scale degree for visibility
+       vertex.label = V(g)$name,
+       vertex.label.cex = 0.7,
+       vertex.label.color = "black",
+       vertex.frame.color = "white",
+       edge.color = "gray70",
+       edge.width = 0.8,
+       main = "Network with Node Sizes Proportional to Betweenness Centrality")
+  
+  legend("topright", legend = countries, fill = country_colors, cex = 0.8, title = "Country")
+}
+
+plot_network_betweenness(g, data)
+
+
 
 ## b). Calculate and compare degree centrality for Kenya vs other countries
 degrees <- degree(g)
@@ -396,6 +455,18 @@ cat("   Other countries - Mean degree:", round(mean(other_degrees), 2), "\n")
 cat("   Kenya participants are", round(mean(kenya_degrees)/mean(other_degrees), 1), "times more connected\n\n")
 
 ##Exercise 1.2 - Calculate and compare betweenness centrality for Kenya vs other countries
+###________________###
+###      Answer    ###
+###________________###
+
+betweenness <- betweenness(g)
+kenya_degrees <- betweenness[data$Country == "Kenya"]
+other_degrees <- betweenness[data$Country != "Kenya"]
+
+cat("b) Betweenness Centrality Comparison:\n")
+cat("   Kenya participants - Mean degree:", round(mean(kenya_degrees), 2), "\n")
+cat("   Other countries - Mean degree:", round(mean(other_degrees), 2), "\n")
+cat("   Kenya participants are", round(mean(kenya_degrees)/mean(other_degrees), 1), "times more connected\n\n")
 
 ## c). Identify top 3 most connected individuals
 top_connected <- sort(degrees, decreasing = TRUE)[1:3]
@@ -409,6 +480,17 @@ for(i in 1:3) {
 
 
 ##Exercise 1.3 - Identify least 3 connected individuals
+###________________###
+###      Answer    ###
+###________________###
+least_connected <- sort(degrees, decreasing = F)[1:3]
+cat("c) Least 3  connected individuals:\n")
+for(i in 1:3) {
+  participant <- names(least_connected)[i]
+  connections <- least_connected[i]
+  country <- data$Country[data$Participant == participant]
+  cat("   ", i, ".", participant, "(", country, ") -", connections, "connections\n")
+}
 
 
 ##Exercise 2: Parameter Sensitivity Analysis
@@ -526,6 +608,52 @@ cat("   - Smaller infected population to control\n")
 cat("   - Prevents exponential growth phase\n")
 cat("   - Delays can lead to overwhelming healthcare systems\n\n")
 
+###________________###
+###      Answer    ###
+###________________###
+
+## a) & b). Implement masks on different days and calculate infections averted
+intervention_days <- 1:12
+infections_averted_list <- numeric(length(intervention_days))
+mask_efficacy <- 0.4
+
+for(i in seq_along(intervention_days)) {
+  set.seed(42)
+  result_mask <- sis_model(adj_matrix, beta, gamma, initial_infected, days, 
+                           mask_day = intervention_days[i], mask_efficacy = mask_efficacy)
+  
+  # Calculate total infections over entire period
+  total_no_mask <- sum(rowSums(result1$states))
+  total_with_mask <- sum(rowSums(result_mask$states))
+  infections_averted_list[i] <- total_no_mask - total_with_mask
+}
+
+## c). Create bar chart
+timing_df <- data.frame(
+  Day = intervention_days,
+  Infections_Averted = infections_averted_list
+)
+
+timing_plot <- ggplot(timing_df, aes(x = factor(Day), y = Infections_Averted)) +
+  geom_bar(stat = "identity", fill = "steelblue", alpha = 0.7) +
+  geom_text(aes(label = Infections_Averted), vjust = -0.3) +
+  labs(title = "Infections Averted by Day of Mask Intervention",
+       subtitle = "Earlier intervention = More infections prevented",
+       x = "Day of Intervention",
+       y = "Total Infections Averted") +
+  theme_minimal()
+print(timing_plot)
+
+cat("c) Intervention Timing Results:\n")
+for(i in seq_along(intervention_days)) {
+  cat("   Day", intervention_days[i], "intervention:", infections_averted_list[i], "infections averted\n")
+}
+
+cat("\nd) Early intervention is more effective because:\n")
+cat("   - Smaller infected population to control\n")
+cat("   - Prevents exponential growth phase\n")
+cat("   - Delays can lead to overwhelming healthcare systems\n\n")
+
 ##Exercise 4: Superspreader Impact Assessment
 
 cat("\n=== EXERCISE 4: SUPERSPREADER ANALYSIS ===\n")
@@ -539,7 +667,23 @@ for(i in 1:6) {
   cat("   ", i, ".", top6_names[i], "-", top6_connected[i], "connections\n")
 }
 
+
+
+
 ##Exercise 31. - Who are the top 6 most connected individuals abased on betweenness? Do they differ from those based on degree centrality? Comment on whether they are different or the same - why?
+
+
+###________________###
+###      Answer    ###
+###________________###
+
+top6_connected_between <- sort(betweenness, decreasing = TRUE)[1:6]
+top6_between_names <- names(top6_connected_between)
+
+cat("a) Top 6 most connected individuals:\n")
+for(i in 1:6) {
+  cat("   ", i, ".", top6_between_names[i], "-", top6_connected_between[i], "connections\n")
+}
 
 ## b) & c). Compare superspreader scenarios
 # Scenario 1: Top 6 most connected as superspreaders
@@ -567,6 +711,39 @@ cat("   Random people as superspreaders:", random_ss_infections, "total infectio
 
 ##Exercise 3.1 - Calculate the superspreader effect based on betweenness centrality, and compare most connected as superspreader and random people as superspreader vs baseline? Do they differ from when using degree centrality?
 
+
+
+###________________###
+###      Answer    ###
+###________________###
+
+## b) & c). Compare superspreader scenarios
+# Scenario 1: Top 6 most connected as superspreaders
+
+set.seed(42)
+result_ss_connected_between <- sis_model(adj_matrix, beta, gamma, initial_infected, days, superspreaders = top6_between_names)
+
+# Scenario 2: Random 6 people as superspreaders
+set.seed(123)
+random_ss_between <- sample(data$Participant, 6)
+set.seed(42)
+result_ss_random_between <- sis_model(adj_matrix, beta, gamma, initial_infected, days, superspreaders = random_ss_between)
+
+## d). Calculate superspreader effects
+baseline_infections_between <- sum(rowSums(result1$states))
+connected_ss_infections_between <- sum(rowSums(result_ss_connected_between$states))
+random_ss_infections_between <- sum(rowSums(result_ss_random_between$states))
+
+connected_effect_between <- round(((connected_ss_infections_between - baseline_infections_between) / baseline_infections_between) * 100, 1)
+random_effect <- round(((random_ss_infections_between - baseline_infections_between) / baseline_infections_between) * 100, 1)
+
+cat("\nb-d) Superspreader Effect Analysis:\n")
+cat("   Baseline (no superspreaders):", baseline_infections_between, "total infections\n")
+cat("   Most connected as superspreaders:", connected_ss_infections_between, "total infections (", connected_effect, "% increase)\n")
+cat("   Random people as superspreaders:", random_ss_infections_between, "total infections (", random_effect, "% increase)\n")
+
+
+
 ## e). Design targeted intervention
 # Target the most connected individuals for intervention (e.g., isolation)
 # Simple approach: remove top 3 most connected from network
@@ -587,6 +764,36 @@ cat("   Infections prevented:", baseline_infections - targeted_infections, "\n")
 cat("   Effectiveness:", round(((baseline_infections - targeted_infections) / baseline_infections) * 100, 1), "% reduction\n\n")
 
 ##Exercise 3.2 - How many infections are prevented if we consider betweenness centrality fo isolation? 
+
+###________________###
+###      Answer    ###
+###________________###
+
+top_connected_between <- sort(betweenness, decreasing = TRUE)[1:3]
+cat("c) Top 3 most connected individuals based on betweeness:\n")
+for(i in 1:3) {
+  participant <- names(top_connected_between)[i]
+  connections <- top_connected_between[i]
+  country <- data$Country[data$Participant == participant]
+  cat("   ", i, ".", participant, "(", country, ") -", connections, "connections\n")
+}
+
+
+adj_matrix_targeted_between <- adj_matrix
+top3_indices_between <- which(rownames(adj_matrix) %in% names(top_connected_between)[1:3])
+
+# Zero out connections for top 3 (simulate isolation)
+adj_matrix_targeted_between[top3_indices_between, ] <- 0
+adj_matrix_targeted_between[, top3_indices_between] <- 0
+
+set.seed(42)
+result_targeted_between <- sis_model(adj_matrix_targeted_between, beta, gamma, initial_infected, days)
+targeted_infections_between <- sum(rowSums(result_targeted_between$states))
+
+cat("\ne) Targeted Intervention (Isolate top 3 connected) based on betweeness:\n")
+cat("   With targeted intervention:", targeted_infections, "total infections\n")
+cat("   Infections prevented:", baseline_infections - targeted_infections_between, "\n")
+cat("   Effectiveness:", round(((baseline_infections - targeted_infections_between) / baseline_infections) * 100, 1), "% reduction\n\n")
 
 ##Exercise 5: Network Structure Modification
 
