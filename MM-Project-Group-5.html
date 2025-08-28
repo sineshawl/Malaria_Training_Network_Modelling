@@ -11,7 +11,7 @@
 
 <meta name="author" content="Group 5" />
 
-<meta name="date" content="2025-08-28" />
+<meta name="date" content="2025-08-29" />
 
 <title>Network Analysis and SIS Epidemic Model</title>
 
@@ -4468,7 +4468,7 @@ border-radius: 0px;
 <h1 class="title toc-ignore">Network Analysis and SIS Epidemic
 Model</h1>
 <h4 class="author">Group 5</h4>
-<h4 class="date">2025-08-28</h4>
+<h4 class="date">2025-08-29</h4>
 
 </div>
 
@@ -4502,8 +4502,8 @@ disease dynamics</li>
   filter = &quot;top&quot;,      # add filters at the top of each column
   rownames = FALSE     # remove row names
 )</code></pre>
-<div class="datatables html-widget html-fill-item" id="htmlwidget-c3f89ac727e250ade6ea" style="width:100%;height:auto;"></div>
-<script type="application/json" data-for="htmlwidget-c3f89ac727e250ade6ea">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["KAM","SIN","RAH","DAW","LUC","TUH","BAS","MBA","MUS","DAV","CHA","EMM","LYD","VAL","GOD","AGN","ROS","FRA","JAM","DGB","ELI","WAN","MUT","GEO","GEF","SAH","PAT","TAB","BRI","STA","OUM","STE","THU","EMI","CAM","ZEN","BIL","JOH","ALI","PUR","WAI","MIL","BRL","TRI"],["Cameroon","Ethiopia","Tanzania","Ethiopia","Zambia","Uganda","Nigeria","Cameroon","Zimbabwe","Zambia","Kenya","Kenya","Kenya","Kenya","Malawi","Malawi","Tanzania","Tanzania","Kenya","Ethiopia","Tanzania","Kenya","Kenya","Kenya","Kenya","Tunisia","Kenya","Kenya","Kenya","Kenya","Tunisia","Kenya","Kenya","Switzerland","Switzerland","Ghana","Switzerland","Kenya","Kenya","Kenya","Kenya","Kenya","Kenya","Kenya"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Participant<\/th>\n      <th>Country<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"autoWidth":true,"columnDefs":[{"name":"Participant","targets":0},{"name":"Country","targets":1}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
+<div class="datatables html-widget html-fill-item" id="htmlwidget-4c02397006c8208a3c7a" style="width:100%;height:auto;"></div>
+<script type="application/json" data-for="htmlwidget-4c02397006c8208a3c7a">{"x":{"filter":"top","vertical":false,"filterHTML":"<tr>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n  <td data-type=\"character\" style=\"vertical-align: top;\">\n    <div class=\"form-group has-feedback\" style=\"margin-bottom: auto;\">\n      <input type=\"search\" placeholder=\"All\" class=\"form-control\" style=\"width: 100%;\"/>\n      <span class=\"glyphicon glyphicon-remove-circle form-control-feedback\"><\/span>\n    <\/div>\n  <\/td>\n<\/tr>","data":[["KAM","SIN","RAH","DAW","LUC","TUH","BAS","MBA","MUS","DAV","CHA","EMM","LYD","VAL","GOD","AGN","ROS","FRA","JAM","DGB","ELI","WAN","MUT","GEO","GEF","SAH","PAT","TAB","BRI","STA","OUM","STE","THU","EMI","CAM","ZEN","BIL","JOH","ALI","PUR","WAI","MIL","BRL","TRI"],["Cameroon","Ethiopia","Tanzania","Ethiopia","Zambia","Uganda","Nigeria","Cameroon","Zimbabwe","Zambia","Kenya","Kenya","Kenya","Kenya","Malawi","Malawi","Tanzania","Tanzania","Kenya","Ethiopia","Tanzania","Kenya","Kenya","Kenya","Kenya","Tunisia","Kenya","Kenya","Kenya","Kenya","Tunisia","Kenya","Kenya","Switzerland","Switzerland","Ghana","Switzerland","Kenya","Kenya","Kenya","Kenya","Kenya","Kenya","Kenya"]],"container":"<table class=\"display\">\n  <thead>\n    <tr>\n      <th>Participant<\/th>\n      <th>Country<\/th>\n    <\/tr>\n  <\/thead>\n<\/table>","options":{"pageLength":5,"autoWidth":true,"columnDefs":[{"name":"Participant","targets":0},{"name":"Country","targets":1}],"order":[],"orderClasses":false,"orderCellsTop":true,"lengthMenu":[5,10,25,50,100]}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div id="part-1-network-construcion" class="section level1">
 <h1>PART 1: NETWORK CONSTRUCION</h1>
@@ -5045,11 +5045,18 @@ print(beta_plot)</code></pre>
 phenomenon?</li>
 </ul>
 <p>Why does the infection plateau? What’s the epidemiological
-phenomenon? ANSWER - The infection plateaus because the epidemic reaches
-an equilibrium (Beta=0.071, I=40), where no more people can be infected.
-Once the susceptible pool is exhausted, the outbreak stops, regardless
-of how high the transmission rate (β) is. The plateau simply reflects
-the population limit, not the strength of transmission.</p>
+phenomenon?</p>
+<p><strong>ANSWER</strong></p>
+<ul>
+<li>The infection plateaus at (Beta=0.071, I=40)</li>
+<li>The epidemic reaches an equilibrium where no more people can be
+infected.</li>
+<li>Once the susceptible compartment is exhausted:</li>
+<li>The outbreak stops, regardless of how high the transmission rate (β)
+is.</li>
+<li>The plateau simply reflects the infected population limit, not the
+strength of transmission rate.</li>
+</ul>
 <pre class="r"><code>## c). Vary γ while keeping β constant
 gammas &lt;- seq(0.05, 0.5, by = 0.05)
 final_infected_gamma &lt;- numeric(length(gammas))
@@ -5103,13 +5110,19 @@ control? What’s another way tomcalculate R₀ as Billy showed in
 class?</li>
 </ul>
 <p>What is R₀? How would you use the knowledge of R₀ for disease
-control? What’s another way to calculate R₀ as Billy showed in class?
-Answers Basic reproductive number(R₀) is the average number of secondary
-cases caused by infected person in a completely susceptible population.
-Analysis: When R₀ = 1: the disease neither grows nor dies quickly When
-R₀ &lt; 1: Disease dies out When R₀ &gt; 1: Disease persists and spreads
-Another ways:<br />
-R₀= β/ (ϒ + τ) where τ is the treatment rate.</p>
+control? What’s another way to calculate R₀ as Billy showed in
+class?</p>
+<p><strong>Answers</strong></p>
+<p>Basic reproductive number(R₀) is the average number of secondary
+cases caused by infected person in a completely susceptible
+population.</p>
+<p><strong>Analysis:</strong></p>
+<ul>
+<li>When R₀ = 1: the disease neither grows nor dies quickly</li>
+<li>When R₀ &lt; 1: Disease dies out</li>
+<li>When R₀ &gt; 1: Disease persists and spreads Another ways:<br />
+-R₀= β/ (ϒ + τ) where τ is the treatment rate.</li>
+</ul>
 <hr />
 </div>
 </div>
@@ -5478,16 +5491,19 @@ print(comparison_epidemic_plot(results_comparison))</code></pre>
 <div id="exercise-4.1" class="section level3">
 <h3>Exercise 4.1:</h3>
 <ul>
-<li>Read the following Based on your analysis, answer the following
-research question: QUESTION: You are a public health official planning
-intervention strategies for a respiratory disease outbreak in a diverse
-international community. Given limited resources, you must choose ONE of
-the following strategies:</li>
+<li><p>Read the following Based on your analysis, answer the following
+research question: <br> <strong>QUESTION:</strong> You are a public
+health official planning intervention strategies <br> for a respiratory
+disease outbreak in a diverse international community. <br> Given
+limited resources, you must choose ONE of the following strategies:
+<br></p></li>
+<li><p>Strategy A: Implement universal masking for everyone starting on
+Day 3</p></li>
+<li><p>Strategy B: Identify and isolate the top 3 most connected
+individuals immediately</p></li>
+<li><p>Strategy C: Implement random testing and isolation of 6
+individuals on Day 1</p></li>
 </ul>
-<p>Strategy A: Implement universal masking for everyone starting on Day
-3 Strategy B: Identify and isolate the top 3 most connected individuals
-immediately Strategy C: Implement random testing and isolation of 6
-individuals on Day 1</p>
 <pre class="r"><code>###Calculate effectiveness of each strategy
 cat(&quot;ANALYSIS TO SUPPORT YOUR DECISION:\n&quot;)</code></pre>
 <p>ANALYSIS TO SUPPORT YOUR DECISION:</p>

@@ -29,6 +29,7 @@ library(igraph) # For graphs
 library(ggplot2) # For plots
 library(dplyr) # For manipulation
 library(RColorBrewer) # For colours
+library(tidyverse)
 
 ##Create the dataset - participants, and their country of origin.
 data <- data.frame( Participant = c("KAM", "SIN", "RAH", "DAW", "LUC", "TUH", "BAS", "MBA", 
@@ -520,6 +521,17 @@ print(beta_plot)
 
 ##Exercise 2.1 - Why does the infection plateau? What's the epidemiological phenomenon?
 
+###________________###
+###      Answer    ###
+###________________###
+
+# The infection plateaus at (Beta=0.071, I=40)
+# The epidemic reaches an equilibrium where no more people can be infected.
+# Once the susceptible compartment is exhausted:
+#   The outbreak stops, regardless of how high the transmission rate (β) is.
+# The plateau simply reflects the infected population limit, not the strength of transmission rate.
+
+
 ## c). Vary γ while keeping β constant
 gammas <- seq(0.05, 0.5, by = 0.05)
 final_infected_gamma <- numeric(length(gammas))
@@ -561,6 +573,19 @@ cat("   When R₀ < 1: Disease dies out\n")
 cat("   When R₀ > 1: Disease persists and spreads\n\n")
 
 ##Exercise 2.2 - What is R₀? How would you use the knowledge of R₀ for disease control? What's another way tomcalculate R₀ as Billy showed in class? 
+
+###________________###
+###      Answer    ###
+###________________###
+
+
+# Basic reproductive number(R₀) is the average number of secondary cases caused by infected person in a completely susceptible population.
+# Analysis:
+#   When R₀ = 1: The disease neither grows nor dies quickly
+# When R₀ < 1: Disease dies out
+# When R₀ > 1: Disease persists and spreads
+# Another way to calculate R₀ as Billy showed :R₀= β/ (ϒ + τ) where τ is the treatment rate
+
 
 ##Exercise 3: Intervention Timing Analysis
 
